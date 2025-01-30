@@ -10,10 +10,10 @@ let inputarr = [];
 console.log("Welcome! Please enter as many integers as you'd like. When you're done, please press q to quit!\n");
 function integerarr() {
     rl.question("Please enter an integer!\n", function(input) {
-        if (input == 'q') {
+        if (input.toLowerCase() === 'q') {
             console.log("The program has been successfully quit \n");
-            console.log("The average of your numbers is: " + avgCalc(inputarr));
-            console.log("The median of your numbers is: " + mediCalc(inputarr));
+            //function call to print the condtion
+            multCheck(inputarr);
             rl.close();
             return;
         }
@@ -33,32 +33,27 @@ function integerarr() {
     });
 }
 
-function mediCalc(arr) {
-    arr.sort((a, b) => a - b);
-    let length = arr.length;
-
-    if (length % 2 == 1) {
-        return arr[Math.floor(length / 2)];
-    }
-
-    let int1 = arr[(length / 2) - 1];
-    let int2 = arr[length / 2];
-    return (int1 + int2) / 2;
-}
-
-function avgCalc(arr) {
-    let count = 0;
-    for (let i = 0; i < arr.length; i++) {
-        count += arr[i];
-    }
-    return (count / arr.length);
-}
-
 function isInt(value) {
     //Parse value
     let val1 = parseFloat(value); 
     //Check that it is an integer
     return !isNaN(val1) && val1 == Math.floor(val1);
+}
+
+function multCheck(arr) {
+    //nested for loop checking the values which continues till the end
+    for(let i = 0; i < arr.length; i++){
+        for(let j = 0; j < arr.length; j++){
+            let sum = arr[i] * arr[j];
+            //multiply then check if in array, if it is print and end
+            if(arr.includes(sum)){
+                console.log("Condition is met: " + arr[i] + " x " + arr[j] + " = " + sum);
+                return;
+            }
+            
+        }
+    }
+    console.log("Condition was not met");
 }
 
 integerarr();
